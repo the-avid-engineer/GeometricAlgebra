@@ -15,7 +15,7 @@
 		<Authors>Chris Philips</Authors>
 		<Copyright>2021 - 2022 © Chris Philips</Copyright>
 		<PackageLicenseExpression>MIT</PackageLicenseExpression>
-		<RepositoryUrl>https://github.com/the-avid-engineer/InfrastructureCli</RepositoryUrl>
+		<RepositoryUrl>https://github.com/the-avid-engineer/GeometricAlgebra</RepositoryUrl>
 		<RepositoryType>git</RepositoryType>
 		<NeutralLanguage>en</NeutralLanguage>
 		<PackageTags>Geometric Algebra</PackageTags>
