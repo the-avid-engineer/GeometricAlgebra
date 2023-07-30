@@ -1,0 +1,34 @@
+on:
+  push:
+    branches:
+      - main
+    tags-ignore:
+      - '**'
+    paths:
+      - '.github/workflows/build.yml'
+      - 'global.json'
+      - 'Directory.Build.props'
+      - 'GeometricAlgebra.sln'
+      - 'src/**'
+      - 'test/**'
+
+name: Build
+
+jobs:
+  build:
+    name: Build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v3
+      - name: Install .NET SDK
+        uses: actions/setup-dotnet@v3
+      - name: Restore Dependencies
+        run: dotnet restore GeometricAlgebra.sln --locked-mode
+      - name: Run Project Tests
+        run: dotnet test GeometricAlgebra.sln --no-restore -c Debug --collect:"XPlat Code Coverage" --results-directory ./TestResults -- DataCollectionRunSettings.DataCollectors.DataCollector.Configuration.Format=opencover
+      - name: Publish Coverage Results
+        uses: codacy/codacy-coverage-reporter-action@v1
+        with:
+          project-token: ${{ secrets.CODACY_PROJECT_TOKEN }}
+          coverage-reports: ./TestResults/**/*.xml
