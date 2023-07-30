@@ -119,7 +119,7 @@ namespace GeometricAlgebra.Analyzers
                             {pseudoScalar} = float.Sinh(angle),
                 """,
                 0 => $"""
-                            {KVector.S} = 1,
+                            {KVector.S} = ComponentMultiplicativeIdentity,
                             {pseudoScalar} = angle,
                 """,
                 -1 => $"""
@@ -219,7 +219,10 @@ namespace GeometricAlgebra.Analyzers
                 // For some reason `float.AdditiveIdentity` is not available??
                 private static readonly float ComponentAdditiveIdentity = float.Sin(default);
 
-                public static readonly {{recordSymbol.Name}} PseudoScalar = new {{recordSymbol.Name}}({{pseudoScalar}}: 1);
+                // For some reason `float.MultiplicativeIdentity` is not available??
+                private static readonly float ComponentMultiplicativeIdentity = float.Cos(default);
+
+                public static readonly {{recordSymbol.Name}} PseudoScalar = new {{recordSymbol.Name}}({{pseudoScalar}}: ComponentMultiplicativeIdentity);
             
                 public static implicit operator {{recordSymbol.Name}}(float scalar)
                 {
@@ -281,7 +284,7 @@ namespace GeometricAlgebra.Analyzers
                 {
                     var conjugate = Conjugate(geometricNumber);
 
-                    return Product(conjugate, 1 / Product(geometricNumber, conjugate).{{KVector.S}});
+                    return Product(conjugate, ComponentMultiplicativeIdentity / Product(geometricNumber, conjugate).{{KVector.S}});
                 }
 
                         
@@ -294,7 +297,7 @@ namespace GeometricAlgebra.Analyzers
                         return geometricNumber;
                     }
 
-                    return Product(geometricNumber, 1 / normal);
+                    return Product(geometricNumber, ComponentMultiplicativeIdentity / normal);
                 }
                             
                 public static {{recordSymbol.Name}} operator ^({{recordSymbol.Name}} geometricNumber, int power)
@@ -325,7 +328,7 @@ namespace GeometricAlgebra.Analyzers
 
                 public static {{recordSymbol.Name}} operator -({{recordSymbol.Name}} geometricNumber)
                 {
-                    return Product(geometricNumber, -1);
+                    return Product(geometricNumber, -ComponentMultiplicativeIdentity);
                 }
 
                 public static {{recordSymbol.Name}} operator *({{recordSymbol.Name}} left, {{recordSymbol.Name}} right)
@@ -349,7 +352,7 @@ namespace GeometricAlgebra.Analyzers
             
                     string GetComponent(float scalar, string suffix = null)
                     {                            
-                        if (scalar == 1)
+                        if (scalar == ComponentMultiplicativeIdentity)
                         {
                             return suffix == null
                                 ? "1"
@@ -358,7 +361,7 @@ namespace GeometricAlgebra.Analyzers
                                     : $"+ {suffix}";
                         }
             
-                        if (scalar == -1)
+                        if (scalar == -ComponentMultiplicativeIdentity)
                         {
                             return suffix == null
                                 ? "-1"
