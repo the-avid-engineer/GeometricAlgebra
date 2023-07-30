@@ -1,0 +1,49 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.5.33424.131
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GeometricAlgebra.Analyzers", "GeometricAlgebra.Analyzers\GeometricAlgebra.Analyzers.csproj", "{8DC44813-3BD8-426F-A17D-4CC5E67A4193}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GeometricAlgebra", "GeometricAlgebra\GeometricAlgebra.csproj", "{62AE903B-EB23-4DDF-860B-CCC5BCF91A6F}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GeometricAlgebra.Common", "GeometricAlgebra.Common\GeometricAlgebra.Common.csproj", "{8A5190DF-BCA1-4783-9B0A-076CF5C11036}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GeometricAlgebra.Common.Benchmarks", "GeometricAlgebra.Common.Benchmarks\GeometricAlgebra.Common.Benchmarks.csproj", "{05CC0BCD-EC6C-43EA-9C35-E8E8010E4682}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GeometricAlgebra.Common.Tests", "GeometricAlgebra.Tests\GeometricAlgebra.Common.Tests.csproj", "{CAA9F18B-C1CE-4642-B88D-B78E163746B5}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{8DC44813-3BD8-426F-A17D-4CC5E67A4193}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8DC44813-3BD8-426F-A17D-4CC5E67A4193}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8DC44813-3BD8-426F-A17D-4CC5E67A4193}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8DC44813-3BD8-426F-A17D-4CC5E67A4193}.Release|Any CPU.Build.0 = Release|Any CPU
+		{62AE903B-EB23-4DDF-860B-CCC5BCF91A6F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{62AE903B-EB23-4DDF-860B-CCC5BCF91A6F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{62AE903B-EB23-4DDF-860B-CCC5BCF91A6F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{62AE903B-EB23-4DDF-860B-CCC5BCF91A6F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8A5190DF-BCA1-4783-9B0A-076CF5C11036}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8A5190DF-BCA1-4783-9B0A-076CF5C11036}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8A5190DF-BCA1-4783-9B0A-076CF5C11036}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8A5190DF-BCA1-4783-9B0A-076CF5C11036}.Release|Any CPU.Build.0 = Release|Any CPU
+		{05CC0BCD-EC6C-43EA-9C35-E8E8010E4682}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{05CC0BCD-EC6C-43EA-9C35-E8E8010E4682}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{05CC0BCD-EC6C-43EA-9C35-E8E8010E4682}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{05CC0BCD-EC6C-43EA-9C35-E8E8010E4682}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CAA9F18B-C1CE-4642-B88D-B78E163746B5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CAA9F18B-C1CE-4642-B88D-B78E163746B5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CAA9F18B-C1CE-4642-B88D-B78E163746B5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CAA9F18B-C1CE-4642-B88D-B78E163746B5}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {A52DC279-CB53-420C-8CE3-A7023B6D0538}
+	EndGlobalSection
+EndGlobal
