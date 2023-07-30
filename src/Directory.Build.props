@@ -11,15 +11,21 @@
 		<IsPackable>true</IsPackable>
 		<IncludeSymbols>true</IncludeSymbols>
 		<SymbolPackageFormat>snupkg</SymbolPackageFormat>
-		<PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
 		<Authors>Chris Philips</Authors>
-		<PackageLicenseExpression>MIT</PackageLicenseExpression>
 		<Copyright>2023 © Chris Philips</Copyright>
 		<RepositoryUrl>https://github.com/the-avid-engineer/GeometricAlgebra</RepositoryUrl>
 		<RepositoryType>git</RepositoryType>
 		<NeutralLanguage>en</NeutralLanguage>
 		<PackageTags>Geometric Algebra</PackageTags>
 		<Description>Provides a source generate for geometric algebras.</Description>
+		<PackageLicenseFile>LICENSE.txt</PackageLicenseFile>
+		<PackageReadmeFile>README.md</PackageReadmeFile>
+		<PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
 	</PropertyGroup>
+	
+	<ItemGroup>
+		<None Include="..\..\LICENSE.txt" Pack="true" PackagePath="\"/>
+		<None Include="..\..\README.md" Pack="true" PackagePath="\"/>
+	</ItemGroup>
 
 </Project>
