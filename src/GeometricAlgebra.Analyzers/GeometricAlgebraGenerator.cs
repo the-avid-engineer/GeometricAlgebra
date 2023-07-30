@@ -16,7 +16,7 @@ namespace GeometricAlgebra.Analyzers
             foreach (var kVector in basisKVectors)
             {
                 source.AppendLine($"""
-                            {kVector} = {(kVector.K == 0 ? "" : "-")}geometricNumber.{kVector},
+                            {kVector} = {(kVector.K == 0 ? "" : "-")}value.{kVector},
                 """);
             }
 
@@ -238,7 +238,7 @@ namespace GeometricAlgebra.Analyzers
                     };
                 }
 
-                public static {{recordSymbol.Name}} Conjugate({{recordSymbol.Name}} geometricNumber)
+                public static {{recordSymbol.Name}} Conjugate({{recordSymbol.Name}} value)
                 {
                     return new {{recordSymbol.Name}}
                     {
@@ -278,22 +278,21 @@ namespace GeometricAlgebra.Analyzers
                     };
                 }
 
-                public static {{recordSymbol.Name}} Invert({{recordSymbol.Name}} geometricNumber)
+                public static {{recordSymbol.Name}} Invert({{recordSymbol.Name}} value)
                 {
-                    var conjugate = Conjugate(geometricNumber);
+                    var conjugate = Conjugate(value);
 
-                    return Product(conjugate, {{componentType}}.ReciprocalEstimate(Product(geometricNumber, conjugate).{{KVector.S}}));
+                    return Product(conjugate, {{componentType}}.ReciprocalEstimate(Product(value, conjugate).{{KVector.S}}));
                 }
 
-
-                public static {{recordSymbol.Name}} Normalize({{recordSymbol.Name}} geometricNumber)
+                public static {{recordSymbol.Name}} Normalize({{recordSymbol.Name}} value)
                 {
-                    var magnitude = {{componentType}}.Abs(Product(geometricNumber, ~geometricNumber).{{KVector.S}});
+                    var conjugate = Conjugate(value);
 
-                    return Product(geometricNumber, {{componentType}}.ReciprocalSqrtEstimate(magnitude));
+                    return Product(value, {{componentType}}.ReciprocalSqrtEstimate(Product(value, conjugate).{{KVector.S}}));
                 }
                             
-                public static {{recordSymbol.Name}} operator ^({{recordSymbol.Name}} geometricNumber, int power)
+                public static {{recordSymbol.Name}} operator ^({{recordSymbol.Name}} value, int power)
                 {
                     if (power == 0)
                     {
@@ -303,25 +302,25 @@ namespace GeometricAlgebra.Analyzers
                     if (power == -1)
                     {
                         power = 0 - power;
-                        geometricNumber = Invert(geometricNumber);
+                        value = Invert(value);
                     }
 
                     for (var i = 1; i < power; i++)
                     {
-                        geometricNumber *= geometricNumber;
+                        value *= value;
                     }
 
-                    return geometricNumber;
+                    return value;
                 }
                         
-                public static {{recordSymbol.Name}} operator ~({{recordSymbol.Name}} geometricNumber)
+                public static {{recordSymbol.Name}} operator ~({{recordSymbol.Name}} value)
                 {
-                    return Conjugate(geometricNumber);
+                    return Conjugate(value);
                 }
 
-                public static {{recordSymbol.Name}} operator -({{recordSymbol.Name}} geometricNumber)
+                public static {{recordSymbol.Name}} operator -({{recordSymbol.Name}} value)
                 {
-                    return Product(geometricNumber, -ComponentMultiplicativeIdentity);
+                    return Product(value, -ComponentMultiplicativeIdentity);
                 }
 
                 public static {{recordSymbol.Name}} operator *({{recordSymbol.Name}} left, {{recordSymbol.Name}} right)
