@@ -344,7 +344,7 @@ namespace GeometricAlgebra.Analyzers
                 {
                     var components = new List<string>();
             
-                    string GetComponent(double scalar, string suffix = null)
+                    string GetComponent(float scalar, string suffix = null)
                     {                            
                         if (scalar == 1)
                         {
@@ -371,7 +371,7 @@ namespace GeometricAlgebra.Analyzers
                                 : $"{scalar:+ 0.#####;- 0.#####;+ 0} {suffix}";
                     }
 
-                    void AddComponent(double scalar, string suffix = null)
+                    void AddComponent(float scalar, string suffix = null)
                     {
                         if (scalar == 0)
                         {
