@@ -1,4 +1,4 @@
-Use a source-generated to generate the geometric algebra object of your choice!
+This package provides a source-generator that can generate the geometric algebra object of your choice!
 
 You can choose how many basis vectors square to +1 (P), -1 (N), or 0 (Z).
 
