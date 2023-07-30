@@ -2,10 +2,7 @@
 using Microsoft.CodeAnalysis.Text;
 using Microsoft.CodeAnalysis;
 using System.Text;
-using System.Linq;
-using System;
 using System.Diagnostics;
-using System.Collections.Generic;
 
 namespace GeometricAlgebra.Analyzers
 {
