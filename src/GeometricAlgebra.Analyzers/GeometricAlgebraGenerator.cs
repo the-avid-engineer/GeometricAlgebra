@@ -115,16 +115,16 @@ namespace GeometricAlgebra.Analyzers
             return sign switch
             {
                 +1 => $"""
-                            {KVector.S} = MathF.Round(MathF.Cosh(angle), 5),
-                            {pseudoScalar} = MathF.Round(MathF.Sinh(angle), 5),
+                            {KVector.S} = MathF.Cosh(angle),
+                            {pseudoScalar} = MathF.Sinh(angle),
                 """,
                 0 => $"""
                             {KVector.S} = 1,
                             {pseudoScalar} = angle,
                 """,
                 -1 => $"""
-                            {KVector.S} = MathF.Round(MathF.Cos(angle), 5),
-                            {pseudoScalar} = MathF.Round(MathF.Sin(angle), 5),
+                            {KVector.S} = MathF.Cos(angle),
+                            {pseudoScalar} = MathF.Sin(angle),
                 """,
                 _ => throw new NotSupportedException("Sign must be +1, 0, or -1")
             };
@@ -284,7 +284,7 @@ namespace GeometricAlgebra.Analyzers
                         
                 public static {{recordSymbol.Name}} Normalize({{recordSymbol.Name}} geometricNumber)
                 {
-                    var normal = MathF.Round(MathF.Sqrt(MathF.Abs(Product(geometricNumber, ~geometricNumber).{{KVector.S}})), 5);
+                    var normal = MathF.Sqrt(MathF.Abs(Product(geometricNumber, ~geometricNumber).{{KVector.S}}));
 
                     if (normal == 0)
                     {
