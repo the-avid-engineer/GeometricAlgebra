@@ -79,7 +79,7 @@ namespace GeometricAlgebra.Analyzers
                     componentsDictionary[initializeComponent.ToString()].Add(sign switch
                     {
                         +1 => $"+(left.{left} * right.{right})",
-                        0 => "+0",
+                        0 => "+ComponentAdditiveIdentity",
                         -1 => $"-(left.{left} * right.{right})",
                         _ => throw new NotSupportedException("Sign must be +1, 0, or -1"),
                     });
@@ -99,7 +99,7 @@ namespace GeometricAlgebra.Analyzers
                 else
                 {
                     source.AppendLine($"""
-                            {components.Key} = 0,
+                            {components.Key} = ComponentAdditiveIdentity,
                 """);
                 }
 
@@ -216,6 +216,9 @@ namespace GeometricAlgebra.Analyzers
             
             {{accessModifier}}partial record {{recordSymbol.Name}}(float {{string.Join(" = default, float ", components)}} = default) : IMultiplyOperators<{{recordSymbol.Name}}, {{recordSymbol.Name}}, {{recordSymbol.Name}}>, IAdditionOperators<{{recordSymbol.Name}}, {{recordSymbol.Name}}, {{recordSymbol.Name}}>
             {
+                // For some reason `float.AdditiveIdentity` is not available??
+                private static readonly float ComponentAdditiveIdentity = float.Sin(default);
+
                 public static readonly {{recordSymbol.Name}} PseudoScalar = new {{recordSymbol.Name}}({{pseudoScalar}}: 1);
             
                 public static implicit operator {{recordSymbol.Name}}(float scalar)
@@ -286,7 +289,7 @@ namespace GeometricAlgebra.Analyzers
                 {
                     var normal = float.Sqrt(float.Abs(Product(geometricNumber, ~geometricNumber).{{KVector.S}}));
 
-                    if (normal == 0)
+                    if (normal == ComponentAdditiveIdentity)
                     {
                         return geometricNumber;
                     }
@@ -373,7 +376,7 @@ namespace GeometricAlgebra.Analyzers
 
                     void AddComponent(float scalar, string suffix = null)
                     {
-                        if (scalar == 0)
+                        if (scalar == ComponentAdditiveIdentity)
                         {
                             return;
                         }
