@@ -282,20 +282,15 @@ namespace GeometricAlgebra.Analyzers
                 {
                     var conjugate = Conjugate(geometricNumber);
 
-                    return Product(conjugate, ComponentMultiplicativeIdentity / Product(geometricNumber, conjugate).{{KVector.S}});
+                    return Product(conjugate, {{componentType}}.ReciprocalEstimate(Product(geometricNumber, conjugate).{{KVector.S}}));
                 }
 
-                        
+
                 public static {{recordSymbol.Name}} Normalize({{recordSymbol.Name}} geometricNumber)
                 {
-                    var normal = {{componentType}}.Sqrt({{componentType}}.Abs(Product(geometricNumber, ~geometricNumber).{{KVector.S}}));
+                    var magnitude = {{componentType}}.Abs(Product(geometricNumber, ~geometricNumber).{{KVector.S}});
 
-                    if (normal == ComponentAdditiveIdentity)
-                    {
-                        return geometricNumber;
-                    }
-
-                    return Product(geometricNumber, ComponentMultiplicativeIdentity / normal);
+                    return Product(geometricNumber, {{componentType}}.ReciprocalSqrtEstimate(magnitude));
                 }
                             
                 public static {{recordSymbol.Name}} operator ^({{recordSymbol.Name}} geometricNumber, int power)
