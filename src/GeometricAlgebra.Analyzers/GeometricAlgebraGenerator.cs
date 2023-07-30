@@ -214,7 +214,7 @@ namespace GeometricAlgebra.Analyzers
 
             namespace {{recordSymbol.ContainingNamespace.ToDisplayString()}};
             
-            {{accessModifier}}partial record {{recordSymbol.Name}}(float {{string.Join(" = 0, float ", components)}} = 0) : IMultiplyOperators<{{recordSymbol.Name}}, {{recordSymbol.Name}}, {{recordSymbol.Name}}>, IAdditionOperators<{{recordSymbol.Name}}, {{recordSymbol.Name}}, {{recordSymbol.Name}}>
+            {{accessModifier}}partial record {{recordSymbol.Name}}(float {{string.Join(" = default, float ", components)}} = default) : IMultiplyOperators<{{recordSymbol.Name}}, {{recordSymbol.Name}}, {{recordSymbol.Name}}>, IAdditionOperators<{{recordSymbol.Name}}, {{recordSymbol.Name}}, {{recordSymbol.Name}}>
             {
                 public static readonly {{recordSymbol.Name}} PseudoScalar = new {{recordSymbol.Name}}({{pseudoScalar}}: 1);
             
