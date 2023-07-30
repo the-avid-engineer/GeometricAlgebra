@@ -18,8 +18,8 @@
 		<RepositoryUrl>https://github.com/the-avid-engineer/InfrastructureCli</RepositoryUrl>
 		<RepositoryType>git</RepositoryType>
 		<NeutralLanguage>en</NeutralLanguage>
-		<PackageTags>Infrastructure CLI Helper</PackageTags>
-		<Description>Provides a base CLI that can be extended.</Description>
+		<PackageTags>Geometric Algebra</PackageTags>
+		<Description>Provides a source generate for geometric algebras.</Description>
 	</PropertyGroup>
 
 </Project>
