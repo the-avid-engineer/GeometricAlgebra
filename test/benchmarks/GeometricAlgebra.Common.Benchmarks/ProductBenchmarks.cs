@@ -13,10 +13,10 @@ public class ProductBenchmarks
     private static readonly Euclidian2DAlgebra LeftInput = new(S: 1, P1: 1);
     private static readonly Euclidian2DAlgebra RightInput = new(S: 1, P2: 1);
 
-    private static readonly ProductAccelerator<Euclidian2DAlgebra> ProductAccelerator = new(NumberOfProducts);
-    private static readonly BoringProductAcceleratorEngine BoringEngine = new();
-    private static readonly SIMDProductAcceleratorEngine SIMDEngine = new();
-    private static readonly OpenCLProductAcceleratorEngine OpenCLEngine = OpenCLProductAcceleratorEngine.Create<Euclidian2DAlgebra>(NumberOfProducts);
+    private static readonly ProductAccelerator<Euclidian2DAlgebra, float> ProductAccelerator = new(NumberOfProducts);
+    private static readonly BoringProductAcceleratorEngine<float> BoringEngine = new();
+    private static readonly SIMDProductAcceleratorEngine<float> SIMDEngine = new();
+    private static readonly OpenCLProductAcceleratorEngine<float> OpenCLEngine = OpenCLProductAcceleratorEngine<float>.Create<Euclidian2DAlgebra>(NumberOfProducts);
 
     [IterationCleanup]
     public void Cleanup()

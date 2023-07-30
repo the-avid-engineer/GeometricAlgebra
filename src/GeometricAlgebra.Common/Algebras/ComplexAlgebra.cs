@@ -4,11 +4,11 @@ using GeometricAlgebra.ProductAccelerators;
 namespace GeometricAlgebra.Common.Algebras;
 
 [GeometricAlgebra(N = 1)]
-public partial record ComplexAlgebra : IProductAcceleratorNumber<ComplexAlgebra>
+public partial record ComplexAlgebra : IProductAcceleratorNumber<ComplexAlgebra, float>
 {
-    static int IProductAcceleratorNumber<ComplexAlgebra>.ComponentCount => 4;
+    static int IProductAcceleratorNumber<ComplexAlgebra, float>.ComponentCount => 4;
 
-    static void IProductAcceleratorNumber<ComplexAlgebra>.SetInputs
+    static void IProductAcceleratorNumber<ComplexAlgebra, float>.SetInputs
     (
         ComplexAlgebra left,
         ComplexAlgebra right,
@@ -27,7 +27,7 @@ public partial record ComplexAlgebra : IProductAcceleratorNumber<ComplexAlgebra>
         rightSpan[3] = right.S;
     }
 
-    static ComplexAlgebra IProductAcceleratorNumber<ComplexAlgebra>.GetOutput
+    static ComplexAlgebra IProductAcceleratorNumber<ComplexAlgebra, float>.GetOutput
     (
         Span<float> productSpan
     )

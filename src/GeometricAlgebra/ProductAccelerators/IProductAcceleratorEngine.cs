@@ -1,6 +1,6 @@
 ﻿namespace GeometricAlgebra.ProductAccelerators;
 
-public interface IProductAcceleratorEngine
+public interface IProductAcceleratorEngine<TValue>
 {
-    void Execute(float[] leftArray, float[] rightArray, float[] productArray);
+    void Execute(TValue[] leftArray, TValue[] rightArray, TValue[] productArray);
 }

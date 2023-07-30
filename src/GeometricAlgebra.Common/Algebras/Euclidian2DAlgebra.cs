@@ -4,11 +4,11 @@ using GeometricAlgebra.ProductAccelerators;
 namespace GeometricAlgebra.Common.Algebras;
 
 [GeometricAlgebra(P = 2)]
-public partial record Euclidian2DAlgebra : IProductAcceleratorNumber<Euclidian2DAlgebra>
+public partial record Euclidian2DAlgebra : IProductAcceleratorNumber<Euclidian2DAlgebra, float>
 {
-    static int IProductAcceleratorNumber<Euclidian2DAlgebra>.ComponentCount => 16;
+    static int IProductAcceleratorNumber<Euclidian2DAlgebra, float>.ComponentCount => 16;
 
-    static void IProductAcceleratorNumber<Euclidian2DAlgebra>.SetInputs
+    static void IProductAcceleratorNumber<Euclidian2DAlgebra, float>.SetInputs
     (
         Euclidian2DAlgebra left,
         Euclidian2DAlgebra right,
@@ -51,7 +51,7 @@ public partial record Euclidian2DAlgebra : IProductAcceleratorNumber<Euclidian2D
         rightSpan[15] = right.S;
     }
 
-    static Euclidian2DAlgebra IProductAcceleratorNumber<Euclidian2DAlgebra>.GetOutput
+    static Euclidian2DAlgebra IProductAcceleratorNumber<Euclidian2DAlgebra, float>.GetOutput
     (
         Span<float> productSpan
     )

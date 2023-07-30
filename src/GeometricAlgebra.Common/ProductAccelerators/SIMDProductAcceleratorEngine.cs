@@ -3,16 +3,17 @@ using GeometricAlgebra.ProductAccelerators;
 
 namespace GeometricAlgebra.Common.ProductAccelerators;
 
-public class SIMDProductAcceleratorEngine : IProductAcceleratorEngine
+public class SIMDProductAcceleratorEngine<TValue> : IProductAcceleratorEngine<TValue>
+    where TValue : struct
 {
-    private static readonly int VectorSize = Vector256<float>.Count;
+    private static readonly int VectorSize = Vector256<TValue>.Count;
 
-    public void Execute(float[] leftArray, float[] rightArray, float[] productArray)
+    public void Execute(TValue[] leftArray, TValue[] rightArray, TValue[] productArray)
     {
         for (var startIndex = 0; startIndex < productArray.Length; startIndex += VectorSize)
         {
-            ReadOnlySpan<float> leftSpan = leftArray.AsSpan(startIndex, VectorSize);
-            ReadOnlySpan<float> rightSpan = rightArray.AsSpan(startIndex, VectorSize);
+            ReadOnlySpan<TValue> leftSpan = leftArray.AsSpan(startIndex, VectorSize);
+            ReadOnlySpan<TValue> rightSpan = rightArray.AsSpan(startIndex, VectorSize);
 
             Vector256
                 .Multiply
