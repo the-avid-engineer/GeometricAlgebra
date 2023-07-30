@@ -13,8 +13,8 @@
 		<SymbolPackageFormat>snupkg</SymbolPackageFormat>
 		<PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
 		<Authors>Chris Philips</Authors>
-		<Copyright>2021 - 2022 © Chris Philips</Copyright>
 		<PackageLicenseExpression>MIT</PackageLicenseExpression>
+		<Copyright>2023 © Chris Philips</Copyright>
 		<RepositoryUrl>https://github.com/the-avid-engineer/GeometricAlgebra</RepositoryUrl>
 		<RepositoryType>git</RepositoryType>
 		<NeutralLanguage>en</NeutralLanguage>
