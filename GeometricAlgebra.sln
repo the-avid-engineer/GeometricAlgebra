@@ -3,15 +3,38 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.5.33424.131
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GeometricAlgebra.Analyzers", "GeometricAlgebra.Analyzers\GeometricAlgebra.Analyzers.csproj", "{8DC44813-3BD8-426F-A17D-4CC5E67A4193}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GeometricAlgebra.Analyzers", "src\GeometricAlgebra.Analyzers\GeometricAlgebra.Analyzers.csproj", "{8DC44813-3BD8-426F-A17D-4CC5E67A4193}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GeometricAlgebra", "GeometricAlgebra\GeometricAlgebra.csproj", "{62AE903B-EB23-4DDF-860B-CCC5BCF91A6F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GeometricAlgebra", "src\GeometricAlgebra\GeometricAlgebra.csproj", "{62AE903B-EB23-4DDF-860B-CCC5BCF91A6F}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GeometricAlgebra.Common", "GeometricAlgebra.Common\GeometricAlgebra.Common.csproj", "{8A5190DF-BCA1-4783-9B0A-076CF5C11036}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GeometricAlgebra.Common", "src\GeometricAlgebra.Common\GeometricAlgebra.Common.csproj", "{8A5190DF-BCA1-4783-9B0A-076CF5C11036}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GeometricAlgebra.Common.Benchmarks", "GeometricAlgebra.Common.Benchmarks\GeometricAlgebra.Common.Benchmarks.csproj", "{05CC0BCD-EC6C-43EA-9C35-E8E8010E4682}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GeometricAlgebra.Common.Benchmarks", "test\benchmarks\GeometricAlgebra.Common.Benchmarks\GeometricAlgebra.Common.Benchmarks.csproj", "{05CC0BCD-EC6C-43EA-9C35-E8E8010E4682}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GeometricAlgebra.Common.Tests", "GeometricAlgebra.Tests\GeometricAlgebra.Common.Tests.csproj", "{CAA9F18B-C1CE-4642-B88D-B78E163746B5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GeometricAlgebra.Common.Tests", "test\unit\GeometricAlgebra.Tests\GeometricAlgebra.Common.Tests.csproj", "{CAA9F18B-C1CE-4642-B88D-B78E163746B5}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{1662D791-4E8F-483F-A455-3FE076C59358}"
+	ProjectSection(SolutionItems) = preProject
+		src\Directory.Build.props = src\Directory.Build.props
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "test", "test", "{B801AFAF-142A-4135-B7CE-51C757410B1A}"
+	ProjectSection(SolutionItems) = preProject
+		test\Directory.Build.props = test\Directory.Build.props
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "unit", "unit", "{399109EE-9374-49AE-B328-A4A80CE64A26}"
+	ProjectSection(SolutionItems) = preProject
+		test\unit\Directory.Build.props = test\unit\Directory.Build.props
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "benchmarks", "benchmarks", "{7A720889-33E1-41EA-BBEE-05A3421D9598}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{33881205-DA8E-4F51-BB72-6E69D3C74001}"
+	ProjectSection(SolutionItems) = preProject
+		Directory.Build.props = Directory.Build.props
+		global.json = global.json
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -42,6 +65,15 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{8DC44813-3BD8-426F-A17D-4CC5E67A4193} = {1662D791-4E8F-483F-A455-3FE076C59358}
+		{62AE903B-EB23-4DDF-860B-CCC5BCF91A6F} = {1662D791-4E8F-483F-A455-3FE076C59358}
+		{8A5190DF-BCA1-4783-9B0A-076CF5C11036} = {1662D791-4E8F-483F-A455-3FE076C59358}
+		{05CC0BCD-EC6C-43EA-9C35-E8E8010E4682} = {7A720889-33E1-41EA-BBEE-05A3421D9598}
+		{CAA9F18B-C1CE-4642-B88D-B78E163746B5} = {399109EE-9374-49AE-B328-A4A80CE64A26}
+		{399109EE-9374-49AE-B328-A4A80CE64A26} = {B801AFAF-142A-4135-B7CE-51C757410B1A}
+		{7A720889-33E1-41EA-BBEE-05A3421D9598} = {B801AFAF-142A-4135-B7CE-51C757410B1A}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {A52DC279-CB53-420C-8CE3-A7023B6D0538}

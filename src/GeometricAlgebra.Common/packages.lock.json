@@ -1,0 +1,16 @@
+{
+  "version": 1,
+  "dependencies": {
+    "net7.0": {
+      "ILGPU": {
+        "type": "Direct",
+        "requested": "[1.4.0, )",
+        "resolved": "1.4.0",
+        "contentHash": "oNmmBhf2FsOOaevBTCLCkc48WJtv+LOsBNvtwkuW3k+PpEkALuS3F333ayNSl6lXeaj19bSrbPEgQO5Sq97tDQ=="
+      },
+      "geometricalgebra": {
+        "type": "Project"
+      }
+    }
+  }
+}
