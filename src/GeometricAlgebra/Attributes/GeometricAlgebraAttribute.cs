@@ -17,4 +17,9 @@ public class GeometricAlgebraAttribute : Attribute
     /// The number of basis vectors that square to zero.
     /// </summary>
     public byte Z { get; set; }
+
+    /// <summary>
+    /// The type of the component
+    /// </summary>
+    public Type ComponentType { get; set; } = typeof(float);
 }

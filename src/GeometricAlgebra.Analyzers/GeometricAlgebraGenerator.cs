@@ -108,23 +108,23 @@ namespace GeometricAlgebra.Analyzers
             return source.ToString().TrimEnd();
         }
 
-        private static string RotorInitializers(KVector pseudoScalar)
+        private static string RotorInitializers(string componentType, KVector pseudoScalar)
         {
             var (_, sign, _) = KVector.GetBasisAndSign(pseudoScalar, pseudoScalar);
 
             return sign switch
             {
                 +1 => $"""
-                            {KVector.S} = float.Cosh(angle),
-                            {pseudoScalar} = float.Sinh(angle),
+                            {KVector.S} = {componentType}.Cosh(angle),
+                            {pseudoScalar} = {componentType}.Sinh(angle),
                 """,
                 0 => $"""
                             {KVector.S} = ComponentMultiplicativeIdentity,
                             {pseudoScalar} = angle,
                 """,
                 -1 => $"""
-                            {KVector.S} = float.Cos(angle),
-                            {pseudoScalar} = float.Sin(angle),
+                            {KVector.S} = {componentType}.Cos(angle),
+                            {pseudoScalar} = {componentType}.Sin(angle),
                 """,
                 _ => throw new NotSupportedException("Sign must be +1, 0, or -1")
             };
@@ -153,9 +153,9 @@ namespace GeometricAlgebra.Analyzers
             return source.ToString().TrimEnd();
         }
 
-        private static string GenerateSource(ISymbol recordSymbol, (byte p, byte n, byte z) metricSignature)
+        private static string GenerateSource(ISymbol recordSymbol, (byte p, byte n, byte z, string componentType) metricSignature)
         {
-            var (p, n, z) = metricSignature;
+            var (p, n, z, componentType) = metricSignature;
 
             var basisVectors = new List<Vector>();
 
@@ -214,17 +214,15 @@ namespace GeometricAlgebra.Analyzers
 
             namespace {{recordSymbol.ContainingNamespace.ToDisplayString()}};
             
-            {{accessModifier}}partial record {{recordSymbol.Name}}(float {{string.Join(" = default, float ", components)}} = default) : IMultiplyOperators<{{recordSymbol.Name}}, {{recordSymbol.Name}}, {{recordSymbol.Name}}>, IAdditionOperators<{{recordSymbol.Name}}, {{recordSymbol.Name}}, {{recordSymbol.Name}}>
+            {{accessModifier}}partial record {{recordSymbol.Name}}({{componentType}} {{string.Join($" = default, {componentType} ", components)}} = default) : IMultiplyOperators<{{recordSymbol.Name}}, {{recordSymbol.Name}}, {{recordSymbol.Name}}>, IAdditionOperators<{{recordSymbol.Name}}, {{recordSymbol.Name}}, {{recordSymbol.Name}}>
             {
-                // For some reason `float.AdditiveIdentity` is not available??
-                private static readonly float ComponentAdditiveIdentity = float.Sin(default);
+                private static readonly {{componentType}} ComponentAdditiveIdentity = {{componentType}}.Sin(default);
 
-                // For some reason `float.MultiplicativeIdentity` is not available??
-                private static readonly float ComponentMultiplicativeIdentity = float.Cos(default);
+                private static readonly {{componentType}} ComponentMultiplicativeIdentity = {{componentType}}.Cos(default);
 
                 public static readonly {{recordSymbol.Name}} PseudoScalar = new {{recordSymbol.Name}}({{pseudoScalar}}: ComponentMultiplicativeIdentity);
             
-                public static implicit operator {{recordSymbol.Name}}(float scalar)
+                public static implicit operator {{recordSymbol.Name}}({{componentType}} scalar)
                 {
                     return new {{recordSymbol.Name}}
                     {
@@ -232,11 +230,11 @@ namespace GeometricAlgebra.Analyzers
                     };
                 }
 
-                public static {{recordSymbol.Name}} Rotor(float angle)
+                public static {{recordSymbol.Name}} Rotor({{componentType}} angle)
                 {
                     return new {{recordSymbol.Name}}
                     {
-            {{RotorInitializers(pseudoScalar)}}
+            {{RotorInitializers(componentType, pseudoScalar)}}
                     };
                 }
 
@@ -290,7 +288,7 @@ namespace GeometricAlgebra.Analyzers
                         
                 public static {{recordSymbol.Name}} Normalize({{recordSymbol.Name}} geometricNumber)
                 {
-                    var normal = float.Sqrt(float.Abs(Product(geometricNumber, ~geometricNumber).{{KVector.S}}));
+                    var normal = {{componentType}}.Sqrt({{componentType}}.Abs(Product(geometricNumber, ~geometricNumber).{{KVector.S}}));
 
                     if (normal == ComponentAdditiveIdentity)
                     {
@@ -350,7 +348,7 @@ namespace GeometricAlgebra.Analyzers
                 {
                     var components = new List<string>();
             
-                    string GetComponent(float scalar, string suffix = null)
+                    string GetComponent({{componentType}} scalar, string suffix = null)
                     {                            
                         if (scalar == ComponentMultiplicativeIdentity)
                         {
@@ -377,7 +375,7 @@ namespace GeometricAlgebra.Analyzers
                                 : $"{scalar:+ 0.#####;- 0.#####;+ 0} {suffix}";
                     }
 
-                    void AddComponent(float scalar, string suffix = null)
+                    void AddComponent({{componentType}} scalar, string suffix = null)
                     {
                         if (scalar == ComponentAdditiveIdentity)
                         {
@@ -432,7 +430,7 @@ namespace GeometricAlgebra.Analyzers
                 {
                     var recordSymbol = semanticModel.GetDeclaredSymbol(recordDeclaration);
 
-                    (byte p, byte n, byte z)? metricSignature = null;
+                    (byte p, byte n, byte z, string componentType)? metricSignature = null;
 
                     foreach (var attributeData in recordSymbol.GetAttributes())
                     {
@@ -447,6 +445,7 @@ namespace GeometricAlgebra.Analyzers
                         byte p = 0;
                         byte n = 0;
                         byte z = 0;
+                        string componentType = "System.Single";
 
                         if (namedArguments.TryGetValue("P", out var pArgument))
                         {
@@ -463,7 +462,12 @@ namespace GeometricAlgebra.Analyzers
                             z = Convert.ToByte(zArgument.Value);
                         }
 
-                        metricSignature = (p, n, z);
+                        if (namedArguments.TryGetValue("ComponentType", out var componentTypeArgument))
+                        {
+                            componentType = componentTypeArgument.Value.ToString();
+                        }
+
+                        metricSignature = (p, n, z, componentType);
 
                         break;
                     }
