@@ -309,7 +309,7 @@ namespace GeometricAlgebra.Analyzers
 
                     for (var i = 1; i < power; i++)
                     {
-                        value *= value;
+                        value = Product(in value, in value);
                     }
 
                     return value;
