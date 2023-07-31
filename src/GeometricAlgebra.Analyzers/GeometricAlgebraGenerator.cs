@@ -280,18 +280,16 @@ namespace GeometricAlgebra.Analyzers
 
                 public static {{recordSymbol.Name}} Invert(in {{recordSymbol.Name}} value)
                 {
-                    var conjugate = Conjugate(in value);
-                    {{recordSymbol.Name}} magnitudeSquaredReciprocal = {{componentType}}.ReciprocalEstimate(Product(in value, in conjugate).{{KVector.S}});
+                    var conjugate = Conjugate(value);
 
-                    return Product(in conjugate, in magnitudeSquaredReciprocal);
+                    return Product(conjugate, {{componentType}}.ReciprocalEstimate(Product(value, conjugate).{{KVector.S}}));
                 }
 
                 public static {{recordSymbol.Name}} Normalize(in {{recordSymbol.Name}} value)
                 {
-                    var conjugate = Conjugate(in value);
-                    {{recordSymbol.Name}} magnitudeReciprocal = {{componentType}}.ReciprocalSqrtEstimate(Product(in value, in conjugate).{{KVector.S}});
+                    var conjugate = Conjugate(value);
 
-                    return Product(in value, in magnitudeReciprocal);
+                    return Product(value, {{componentType}}.ReciprocalSqrtEstimate(Product(value, conjugate).{{KVector.S}}));
                 }
                             
                 public static {{recordSymbol.Name}} operator ^({{recordSymbol.Name}} value, int power)
@@ -304,12 +302,12 @@ namespace GeometricAlgebra.Analyzers
                     if (power == -1)
                     {
                         power = 0 - power;
-                        value = Invert(in value);
+                        value = Invert(value);
                     }
 
                     for (var i = 1; i < power; i++)
                     {
-                        value = Product(in value, in value);
+                        value = Product(value, value);
                     }
 
                     return value;
@@ -317,31 +315,27 @@ namespace GeometricAlgebra.Analyzers
                         
                 public static {{recordSymbol.Name}} operator ~({{recordSymbol.Name}} value)
                 {
-                    return Conjugate(in value);
+                    return Conjugate(value);
                 }
 
                 public static {{recordSymbol.Name}} operator -({{recordSymbol.Name}} value)
                 {
-                    {{recordSymbol.Name}} componentMultiplicativeIdentityAdditiveInverse = -ComponentMultiplicativeIdentity;
-
-                    return Product(in value, in componentMultiplicativeIdentityAdditiveInverse);
+                    return Product(value, -ComponentMultiplicativeIdentity);
                 }
 
                 public static {{recordSymbol.Name}} operator *({{recordSymbol.Name}} left, {{recordSymbol.Name}} right)
                 {
-                    return Product(in left, in right);
+                    return Product(left, right);
                 }
             
                 public static {{recordSymbol.Name}} operator +({{recordSymbol.Name}} left, {{recordSymbol.Name}} right)
                 {
-                    return Sum(in left, in right);
+                    return Sum(left, right);
                 }
 
                 public static {{recordSymbol.Name}} operator -({{recordSymbol.Name}} left, {{recordSymbol.Name}} right)
                 {
-                    right = -right;
-
-                    return Sum(in left, in right);
+                    return Sum(left, -right);
                 }
                             
                 public override string ToString()
