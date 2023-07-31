@@ -16,11 +16,11 @@ namespace GeometricAlgebra.Analyzers
             foreach (var kVector in basisKVectors)
             {
                 source.AppendLine($"""
-                            {kVector} = {(kVector.K == 0 ? "" : "-")}value.{kVector},
+                            {kVector}: {(kVector.K == 0 ? "" : "-")}value.{kVector},
                 """);
             }
 
-            return source.ToString().TrimEnd();
+            return source.ToString().TrimEnd().TrimEnd(',');
         }
 
         private static string CastInitializers(IEnumerable<KVector> basisKVectors)
@@ -35,11 +35,11 @@ namespace GeometricAlgebra.Analyzers
                 }
 
                 source.AppendLine($"""
-                            {kVector} = scalar,
+                            {kVector}: scalar,
                 """);
             }
 
-            return source.ToString().TrimEnd();
+            return source.ToString().TrimEnd().TrimEnd(',');
         }
 
         private static string SumInitializers(IEnumerable<KVector> basisKVectors)
@@ -49,11 +49,11 @@ namespace GeometricAlgebra.Analyzers
             foreach (var kVector in basisKVectors)
             {
                 source.AppendLine($"""
-                            {kVector} = left.{kVector} + right.{kVector},
+                            {kVector}: left.{kVector} + right.{kVector},
                 """);
             }
 
-            return source.ToString().TrimEnd();
+            return source.ToString().TrimEnd().TrimEnd(',');
         }
 
         private static string ProductInitializers(IEnumerable<KVector> basisKVectors, bool? parallelParts)
@@ -93,19 +93,19 @@ namespace GeometricAlgebra.Analyzers
                 if (components.Value.Count > 0)
                 {
                     source.AppendLine($"""
-                            {components.Key} = {string.Join("", components.Value).TrimStart('+')},
+                            {components.Key}: {string.Join("", components.Value).TrimStart('+')},
                 """);
                 }
                 else
                 {
                     source.AppendLine($"""
-                            {components.Key} = ComponentAdditiveIdentity,
+                            {components.Key}: ComponentAdditiveIdentity,
                 """);
                 }
 
             }
 
-            return source.ToString().TrimEnd();
+            return source.ToString().TrimEnd().TrimEnd(',');
         }
 
         private static string RotorInitializers(string componentType, KVector pseudoScalar)
@@ -115,16 +115,16 @@ namespace GeometricAlgebra.Analyzers
             return sign switch
             {
                 +1 => $"""
-                            {KVector.S} = {componentType}.Cosh(angle),
-                            {pseudoScalar} = {componentType}.Sinh(angle),
+                            {KVector.S}: {componentType}.Cosh(angle),
+                            {pseudoScalar}: {componentType}.Sinh(angle)
                 """,
                 0 => $"""
-                            {KVector.S} = ComponentMultiplicativeIdentity,
-                            {pseudoScalar} = angle,
+                            {KVector.S}: ComponentMultiplicativeIdentity,
+                            {pseudoScalar}: angle
                 """,
                 -1 => $"""
-                            {KVector.S} = {componentType}.Cos(angle),
-                            {pseudoScalar} = {componentType}.Sin(angle),
+                            {KVector.S}: {componentType}.Cos(angle),
+                            {pseudoScalar}: {componentType}.Sin(angle)
                 """,
                 _ => throw new NotSupportedException("Sign must be +1, 0, or -1")
             };
@@ -225,57 +225,57 @@ namespace GeometricAlgebra.Analyzers
                 public static implicit operator {{recordSymbol.Name}}({{componentType}} scalar)
                 {
                     return new {{recordSymbol.Name}}
-                    {
+                    (
             {{CastInitializers(basisKVectors)}}
-                    };
+                    );
                 }
 
                 public static {{recordSymbol.Name}} Rotor({{componentType}} angle)
                 {
                     return new {{recordSymbol.Name}}
-                    {
+                    (
             {{RotorInitializers(componentType, pseudoScalar)}}
-                    };
+                    );
                 }
 
                 public static {{recordSymbol.Name}} Conjugate({{recordSymbol.Name}} value)
                 {
                     return new {{recordSymbol.Name}}
-                    {
+                    (
             {{ConjugateInitializers(basisKVectors)}}
-                    };
+                    );
                 }
             
                 public static {{recordSymbol.Name}} Product({{recordSymbol.Name}} left, {{recordSymbol.Name}} right)
                 {
                     return new {{recordSymbol.Name}}
-                    {
+                    (
             {{ProductInitializers(basisKVectors, null)}}
-                    };
+                    );
                 }
             
                 public static {{recordSymbol.Name}} WedgeProduct({{recordSymbol.Name}} left, {{recordSymbol.Name}} right)
                 {
                     return new {{recordSymbol.Name}}
-                    {
+                    (
             {{ProductInitializers(basisKVectors, false)}}
-                    };
+                    );
                 }
             
                 public static {{recordSymbol.Name}} DotProduct({{recordSymbol.Name}} left, {{recordSymbol.Name}} right)
                 {
                     return new {{recordSymbol.Name}}
-                    {
+                    (
             {{ProductInitializers(basisKVectors, true)}}
-                    };
+                    );
                 }
 
                 public static {{recordSymbol.Name}} Sum({{recordSymbol.Name}} left, {{recordSymbol.Name}} right)
                 {
                     return new {{recordSymbol.Name}}
-                    {
+                    (
             {{SumInitializers(basisKVectors)}}
-                    };
+                    );
                 }
 
                 public static {{recordSymbol.Name}} Invert({{recordSymbol.Name}} value)
