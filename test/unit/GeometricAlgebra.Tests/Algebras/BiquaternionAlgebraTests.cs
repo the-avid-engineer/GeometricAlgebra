@@ -14,6 +14,8 @@ public class BiquaternionAlgebraTests
         var Hj = new BiquaternionAlgebra(N2: C1);
         var Hk = new BiquaternionAlgebra(N1N2: C1);
 
+        yield return (~!(Hi * Hj * Hk * Ci), (-Hk * -Hj * -Hi * -Ci));
+
         yield return (Hi ^ 2, -H1);
         yield return (Hj ^ 2, -H1);
         yield return (Hk ^ 2, -H1);
