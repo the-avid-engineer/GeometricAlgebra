@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace GeometricAlgebra.Analyzers
+﻿namespace GeometricAlgebra.Analyzers
 {
     internal class Vector
     {
@@ -8,13 +6,15 @@ namespace GeometricAlgebra.Analyzers
         public char Symbol { get; }
         public byte SymbolOrder { get; }
         public byte Index { get; }
+        public string ComponentString { get; }
 
-        public Vector(float squared, char symbol, byte symbolOrder, byte index)
+        public Vector(float squared, char symbol, byte symbolOrder, byte index, string componentString)
         {
             MagnitudeSquared = squared;
             Symbol = symbol;
             SymbolOrder = symbolOrder;
             Index = index;
+            ComponentString = componentString;
         }
 
         public static bool operator ==(Vector left, Vector right)

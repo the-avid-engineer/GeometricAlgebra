@@ -90,6 +90,11 @@ namespace GeometricAlgebra.Analyzers
             return new KVector(new Vector[] { vector });
         }
 
+        public string ToComponentString()
+        {
+            return string.Join("", Vectors.Select(vector => vector.ComponentString ?? vector.ToString().ToLowerInvariant()));
+        }
+
         public override string ToString()
         {
             if (Vectors.Count == 0)

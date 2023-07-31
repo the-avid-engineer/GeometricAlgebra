@@ -145,7 +145,7 @@ namespace GeometricAlgebra.Analyzers
                 else
                 {
                     source.AppendLine($"""
-                        AddComponent({kVector}, "{kVector.ToString().ToLowerInvariant()}");
+                        AddComponent({kVector}, "{kVector.ToComponentString()}");
                 """);
                 }
             }
@@ -153,25 +153,25 @@ namespace GeometricAlgebra.Analyzers
             return source.ToString().TrimEnd();
         }
 
-        private static string GenerateSource(ISymbol recordSymbol, (byte p, byte n, byte z, string componentType) metricSignature)
+        private static string GenerateSource(ISymbol recordSymbol, (byte p, byte n, byte z, string componentType, string[] componentStrings) metricSignature)
         {
-            var (p, n, z, componentType) = metricSignature;
+            var (p, n, z, componentType, componentStrings) = metricSignature;
 
             var basisVectors = new List<Vector>();
 
             for (byte i = 1; i <= p; i++)
             {
-                basisVectors.Add(new Vector(+1, 'P', 1, i));
+                basisVectors.Add(new Vector(+1, 'P', 1, i, componentStrings.ElementAtOrDefault(i - 1)));
             }
 
             for (byte i = 1; i <= n; i++)
             {
-                basisVectors.Add(new Vector(-1, 'N', 2, i));
+                basisVectors.Add(new Vector(-1, 'N', 2, i, componentStrings.Skip(p).ElementAtOrDefault(i - 1)));
             }
 
             for (byte i = 1; i <= z; i++)
             {
-                basisVectors.Add(new Vector(0, 'Z', 3, i));
+                basisVectors.Add(new Vector(0, 'Z', 3, i, componentStrings.Skip(p + n).ElementAtOrDefault(i - 1)));
             }
 
             var basisKVectors = new List<KVector>();
@@ -424,7 +424,7 @@ namespace GeometricAlgebra.Analyzers
                 {
                     var recordSymbol = semanticModel.GetDeclaredSymbol(recordDeclaration);
 
-                    (byte p, byte n, byte z, string componentType)? metricSignature = null;
+                    (byte p, byte n, byte z, string componentType, string[] componentStrings)? metricSignature = null;
 
                     foreach (var attributeData in recordSymbol.GetAttributes())
                     {
@@ -434,12 +434,18 @@ namespace GeometricAlgebra.Analyzers
                             continue;
                         }
 
-                        var namedArguments = attributeData.NamedArguments.ToDictionary(x => x.Key, x => x.Value);
-
                         byte p = 0;
                         byte n = 0;
                         byte z = 0;
                         string componentType = "System.Single";
+
+                        var constructorArguments = attributeData.ConstructorArguments;
+
+                        var componentStrings = constructorArguments[0].Values
+                            .Select(x => x.Value.ToString())
+                            .ToArray();
+
+                        var namedArguments = attributeData.NamedArguments.ToDictionary(x => x.Key, x => x.Value);
 
                         if (namedArguments.TryGetValue("P", out var pArgument))
                         {
@@ -461,7 +467,12 @@ namespace GeometricAlgebra.Analyzers
                             componentType = componentTypeArgument.Value.ToString();
                         }
 
-                        metricSignature = (p, n, z, componentType);
+                        if (componentStrings.Length > 0 && componentStrings.Length != p + n + z)
+                        {
+                            throw new Exception("If componentStrings are specified, you must specify one for each basis vector, in order of p, n, z!");
+                        }
+
+                        metricSignature = (p, n, z, componentType, componentStrings);
 
                         break;
                     }

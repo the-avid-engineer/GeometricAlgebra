@@ -2,7 +2,7 @@
 
 namespace GeometricAlgebra.Common.Algebras;
 
-[GeometricAlgebra(N = 1)]
+[GeometricAlgebra("i", N = 1)]
 public readonly partial record struct ComplexAlgebra
 {
     public static ComplexAlgebra ReciprocalEstimate(ComplexAlgebra value)

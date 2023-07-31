@@ -2,7 +2,7 @@
 
 namespace GeometricAlgebra.Common.Algebras;
 
-[GeometricAlgebra(N = 2, ComponentType = typeof(ComplexAlgebra))]
+[GeometricAlgebra("î", "ĵ", N = 2, ComponentType = typeof(ComplexAlgebra))]
 public readonly partial record struct BiquaternionAlgebra
 {
     public static BiquaternionAlgebra ComplexProduct(in BiquaternionAlgebra biquaternionValue, in ComplexAlgebra complexValue)
