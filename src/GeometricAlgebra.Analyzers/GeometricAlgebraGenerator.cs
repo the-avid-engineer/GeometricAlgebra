@@ -230,7 +230,7 @@ namespace GeometricAlgebra.Analyzers
                     );
                 }
 
-                public static {{recordSymbol.Name}} Rotor({{componentType}} angle)
+                public static {{recordSymbol.Name}} Rotor(in {{componentType}} angle)
                 {
                     return new {{recordSymbol.Name}}
                     (
@@ -238,7 +238,7 @@ namespace GeometricAlgebra.Analyzers
                     );
                 }
 
-                public static {{recordSymbol.Name}} Conjugate({{recordSymbol.Name}} value)
+                public static {{recordSymbol.Name}} Conjugate(in {{recordSymbol.Name}} value)
                 {
                     return new {{recordSymbol.Name}}
                     (
@@ -246,7 +246,7 @@ namespace GeometricAlgebra.Analyzers
                     );
                 }
             
-                public static {{recordSymbol.Name}} Product({{recordSymbol.Name}} left, {{recordSymbol.Name}} right)
+                public static {{recordSymbol.Name}} Product(in {{recordSymbol.Name}} left, in {{recordSymbol.Name}} right)
                 {
                     return new {{recordSymbol.Name}}
                     (
@@ -254,7 +254,7 @@ namespace GeometricAlgebra.Analyzers
                     );
                 }
             
-                public static {{recordSymbol.Name}} WedgeProduct({{recordSymbol.Name}} left, {{recordSymbol.Name}} right)
+                public static {{recordSymbol.Name}} WedgeProduct(in {{recordSymbol.Name}} left, in {{recordSymbol.Name}} right)
                 {
                     return new {{recordSymbol.Name}}
                     (
@@ -262,7 +262,7 @@ namespace GeometricAlgebra.Analyzers
                     );
                 }
             
-                public static {{recordSymbol.Name}} DotProduct({{recordSymbol.Name}} left, {{recordSymbol.Name}} right)
+                public static {{recordSymbol.Name}} DotProduct(in {{recordSymbol.Name}} left, in {{recordSymbol.Name}} right)
                 {
                     return new {{recordSymbol.Name}}
                     (
@@ -270,7 +270,7 @@ namespace GeometricAlgebra.Analyzers
                     );
                 }
 
-                public static {{recordSymbol.Name}} Sum({{recordSymbol.Name}} left, {{recordSymbol.Name}} right)
+                public static {{recordSymbol.Name}} Sum(in {{recordSymbol.Name}} left, in {{recordSymbol.Name}} right)
                 {
                     return new {{recordSymbol.Name}}
                     (
@@ -278,18 +278,20 @@ namespace GeometricAlgebra.Analyzers
                     );
                 }
 
-                public static {{recordSymbol.Name}} Invert({{recordSymbol.Name}} value)
+                public static {{recordSymbol.Name}} Invert(in {{recordSymbol.Name}} value)
                 {
-                    var conjugate = Conjugate(value);
+                    var conjugate = Conjugate(in value);
+                    {{recordSymbol.Name}} magnitudeSquaredReciprocal = {{componentType}}.ReciprocalEstimate(Product(in value, in conjugate).{{KVector.S}});
 
-                    return Product(conjugate, {{componentType}}.ReciprocalEstimate(Product(value, conjugate).{{KVector.S}}));
+                    return Product(in conjugate, in magnitudeSquaredReciprocal);
                 }
 
-                public static {{recordSymbol.Name}} Normalize({{recordSymbol.Name}} value)
+                public static {{recordSymbol.Name}} Normalize(in {{recordSymbol.Name}} value)
                 {
-                    var conjugate = Conjugate(value);
+                    var conjugate = Conjugate(in value);
+                    {{recordSymbol.Name}} magnitudeReciprocal = {{componentType}}.ReciprocalSqrtEstimate(Product(in value, in conjugate).{{KVector.S}});
 
-                    return Product(value, {{componentType}}.ReciprocalSqrtEstimate(Product(value, conjugate).{{KVector.S}}));
+                    return Product(in value, in magnitudeReciprocal);
                 }
                             
                 public static {{recordSymbol.Name}} operator ^({{recordSymbol.Name}} value, int power)
@@ -302,7 +304,7 @@ namespace GeometricAlgebra.Analyzers
                     if (power == -1)
                     {
                         power = 0 - power;
-                        value = Invert(value);
+                        value = Invert(in value);
                     }
 
                     for (var i = 1; i < power; i++)
@@ -315,27 +317,31 @@ namespace GeometricAlgebra.Analyzers
                         
                 public static {{recordSymbol.Name}} operator ~({{recordSymbol.Name}} value)
                 {
-                    return Conjugate(value);
+                    return Conjugate(in value);
                 }
 
                 public static {{recordSymbol.Name}} operator -({{recordSymbol.Name}} value)
                 {
-                    return Product(value, -ComponentMultiplicativeIdentity);
+                    {{recordSymbol.Name}} componentMultiplicativeIdentityAdditiveInverse = -ComponentMultiplicativeIdentity;
+
+                    return Product(in value, in componentMultiplicativeIdentityAdditiveInverse);
                 }
 
                 public static {{recordSymbol.Name}} operator *({{recordSymbol.Name}} left, {{recordSymbol.Name}} right)
                 {
-                    return Product(left, right);
+                    return Product(in left, in right);
                 }
             
                 public static {{recordSymbol.Name}} operator +({{recordSymbol.Name}} left, {{recordSymbol.Name}} right)
                 {
-                    return Sum(left, right);
+                    return Sum(in left, in right);
                 }
 
                 public static {{recordSymbol.Name}} operator -({{recordSymbol.Name}} left, {{recordSymbol.Name}} right)
                 {
-                    return Sum(left, -right);
+                    right = -right;
+
+                    return Sum(in left, in right);
                 }
                             
                 public override string ToString()
