@@ -3,4 +3,4 @@
 namespace GeometricAlgebra.Common.Algebras;
 
 [GeometricAlgebra(N = 2)]
-public partial record QuaternionAlgebra;
+public partial record struct QuaternionAlgebra;

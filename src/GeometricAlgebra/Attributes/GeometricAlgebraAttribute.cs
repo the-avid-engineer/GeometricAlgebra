@@ -1,6 +1,6 @@
 ﻿namespace GeometricAlgebra.Attributes;
 
-[AttributeUsage(AttributeTargets.Class, AllowMultiple = false, Inherited = false)]
+[AttributeUsage(AttributeTargets.Struct, AllowMultiple = false, Inherited = false)]
 public class GeometricAlgebraAttribute : Attribute
 {
     /// <summary>

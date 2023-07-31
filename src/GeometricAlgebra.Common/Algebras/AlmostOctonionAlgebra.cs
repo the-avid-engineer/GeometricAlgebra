@@ -3,4 +3,4 @@
 namespace GeometricAlgebra.Common.Algebras;
 
 [GeometricAlgebra(N = 3)]
-public partial record AlmostOctonionAlgebra;
+public partial record struct AlmostOctonionAlgebra;

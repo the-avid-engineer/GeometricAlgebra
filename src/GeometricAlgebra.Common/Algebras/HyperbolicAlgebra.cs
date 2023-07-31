@@ -3,4 +3,4 @@
 namespace GeometricAlgebra.Common.Algebras;
 
 [GeometricAlgebra(P = 1)]
-public partial record HyperbolicAlgebra;
+public partial record struct HyperbolicAlgebra;

@@ -4,7 +4,7 @@ using GeometricAlgebra.ProductAccelerators;
 namespace GeometricAlgebra.Common.Algebras;
 
 [GeometricAlgebra(N = 1)]
-public partial record ComplexAlgebra : IProductAcceleratorNumber<ComplexAlgebra, float>
+public partial record struct ComplexAlgebra : IProductAcceleratorNumber<ComplexAlgebra, float>
 {
     public static ComplexAlgebra ReciprocalEstimate(ComplexAlgebra value)
     {
