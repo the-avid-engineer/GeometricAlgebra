@@ -3,7 +3,7 @@
 namespace GeometricAlgebra.Common.Algebras;
 
 [GeometricAlgebra(N = 2, ComponentType = typeof(ComplexAlgebra))]
-public partial record struct BiquaternionAlgebra
+public readonly partial record struct BiquaternionAlgebra
 {
     public static BiquaternionAlgebra Product(BiquaternionAlgebra biquaternionValue, ComplexAlgebra complexValue)
     {

@@ -214,7 +214,7 @@ namespace GeometricAlgebra.Analyzers
 
             namespace {{recordSymbol.ContainingNamespace.ToDisplayString()}};
             
-            {{accessModifier}}partial record struct {{recordSymbol.Name}}({{componentType}} {{string.Join($" = default, {componentType} ", components)}} = default) : IMultiplyOperators<{{recordSymbol.Name}}, {{recordSymbol.Name}}, {{recordSymbol.Name}}>, IAdditionOperators<{{recordSymbol.Name}}, {{recordSymbol.Name}}, {{recordSymbol.Name}}>
+            {{accessModifier}}readonly partial record struct {{recordSymbol.Name}}({{componentType}} {{string.Join($" = default, {componentType} ", components)}} = default) : IMultiplyOperators<{{recordSymbol.Name}}, {{recordSymbol.Name}}, {{recordSymbol.Name}}>, IAdditionOperators<{{recordSymbol.Name}}, {{recordSymbol.Name}}, {{recordSymbol.Name}}>
             {
                 private static readonly {{componentType}} ComponentAdditiveIdentity = {{componentType}}.Sin(default);
 

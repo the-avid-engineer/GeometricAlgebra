@@ -6,5 +6,5 @@ A complex algebra (containing complex numbers) is as simple as:
 
 ```cs
 [GeometricAlgebra(N = 1)]
-public partial record ComplexAlgebra;
+public readonly partial record ComplexAlgebra;
 ```

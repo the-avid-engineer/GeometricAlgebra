@@ -4,7 +4,7 @@ using GeometricAlgebra.ProductAccelerators;
 namespace GeometricAlgebra.Common.Algebras;
 
 [GeometricAlgebra(P = 2)]
-public partial record struct Euclidian2DAlgebra : IProductAcceleratorNumber<Euclidian2DAlgebra, float>
+public readonly partial record struct Euclidian2DAlgebra : IProductAcceleratorNumber<Euclidian2DAlgebra, float>
 {
     static int IProductAcceleratorNumber<Euclidian2DAlgebra, float>.ComponentCount => 16;
 
