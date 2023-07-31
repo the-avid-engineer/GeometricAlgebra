@@ -1,83 +1,39 @@
 ﻿using BenchmarkDotNet.Attributes;
 using GeometricAlgebra.Common.Algebras;
-using GeometricAlgebra.Common.ProductAccelerators;
-using GeometricAlgebra.ProductAccelerators;
 
 namespace GeometricAlgebra.Common.Benchmarks;
 
 [MemoryDiagnoser]
 public class ProductBenchmarks
 {
-    private const int NumberOfProducts = 1_000_000;
+    private static readonly Random random = new Random(0);
 
-    private static readonly Euclidian2DAlgebra LeftInput = new(S: 1, P1: 1);
-    private static readonly Euclidian2DAlgebra RightInput = new(S: 1, P2: 1);
+    private Euclidian2DAlgebra LeftInput = default;
+    private Euclidian2DAlgebra RightInput = default;
 
-    private static readonly ProductAccelerator<Euclidian2DAlgebra, float> ProductAccelerator = new(NumberOfProducts);
-    private static readonly BoringProductAcceleratorEngine<float> BoringEngine = new();
-    private static readonly SIMDProductAcceleratorEngine<float> SIMDEngine = new();
-    private static readonly OpenCLProductAcceleratorEngine<float> OpenCLEngine = OpenCLProductAcceleratorEngine<float>.Create<Euclidian2DAlgebra>(NumberOfProducts);
-
-    [IterationCleanup]
-    public void Cleanup()
+    [IterationSetup]
+    public void Setup()
     {
-        ProductAccelerator.ResetIndex();
+        LeftInput = new Euclidian2DAlgebra
+        (
+            random.NextSingle(),
+            random.NextSingle(),
+            random.NextSingle(),
+            random.NextSingle()
+        );
+
+        RightInput = new Euclidian2DAlgebra
+        (
+            random.NextSingle(),
+            random.NextSingle(),
+            random.NextSingle(),
+            random.NextSingle()
+        );
     }
 
     [Benchmark]
-    public void NonAccelerated()
+    public void Product()
     {
-        for (var n = 0; n < NumberOfProducts; n++)
-        {
-            _ = LeftInput * RightInput;
-        }
-    }
-
-    [Benchmark]
-    public void Boring()
-    {
-        for (var n = 0; n < NumberOfProducts; n++)
-        {
-            _ = ProductAccelerator.SetInputs(LeftInput, RightInput);
-        }
-
-        ProductAccelerator.Execute(BoringEngine);
-
-        for (var n = 0; n < NumberOfProducts; n++)
-        {
-            _ = ProductAccelerator.GetOutput(n);
-        }
-    }
-
-    [Benchmark]
-    public void SIMD()
-    {
-        for (var n = 0; n < NumberOfProducts; n++)
-        {
-            _ = ProductAccelerator.SetInputs(LeftInput, RightInput);
-        }
-
-        ProductAccelerator.Execute(SIMDEngine);
-
-        for (var n = 0; n < NumberOfProducts; n++)
-        {
-            _ = ProductAccelerator.GetOutput(n);
-        }
-    }
-
-    [Benchmark]
-    public void OpenCL()
-    {
-        for (var n = 0; n < NumberOfProducts; n++)
-        {
-            _ = ProductAccelerator.SetInputs(LeftInput, RightInput);
-        }
-
-        ProductAccelerator.Execute(OpenCLEngine);
-
-        for (var n = 0; n < NumberOfProducts; n++)
-        {
-            _ = ProductAccelerator.GetOutput(n);
-        }
+        _ = Euclidian2DAlgebra.Product(in LeftInput, in RightInput);
     }
 }
